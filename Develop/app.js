@@ -10,7 +10,17 @@ const outputPath = path.join(OUTPUT_DIR, "team.html");
 
 const render = require("./lib/htmlRenderer");
 
-const questionsPrompt = () =>
+const teamMember = () =>
+  inquirer.prompt([
+    {
+      type: "list",
+      name: "role",
+      message: "What kind of team member do you want to create?",
+      choices: ["manager", "engineer", "intern"],
+    },
+  ]);
+
+const managerQuestions = () =>
   inquirer.prompt([
     {
       type: "input",
@@ -18,10 +28,22 @@ const questionsPrompt = () =>
       message: "What is your name?",
     },
     {
-      type: "list",
-      name: "role",
-      message: "What is your position/role at the company?",
-      choices: ["manager", "engineer", "intern"],
+      type: "input",
+      name: "email",
+      message: "What is your email address?",
+    },
+    {
+      type: "input",
+      name: "officenumber",
+      message: "What is your office number?",
+    },
+  ]);
+const internQuestions = () =>
+  inquirer.prompt([
+    {
+      type: "input",
+      name: "name",
+      message: "What is your name?",
     },
     {
       type: "input",
@@ -33,19 +55,54 @@ const questionsPrompt = () =>
       name: "school",
       message: "What school do you attend?",
     },
+  ]);
+const engineerQuestions = () =>
+  inquirer.prompt([
+    {
+      type: "input",
+      name: "name",
+      message: "What is your name?",
+    },
+    {
+      type: "input",
+      name: "email",
+      message: "What is your email address?",
+    },
     {
       type: "input",
       name: "github",
       message: "What is your GitHub username?",
     },
-    {
-      type: "input",
-      name: "officenumber",
-      message: "What is your office number?",
-    },
   ]);
 
-// const writeFileAsync =
+const generateHTML = (answers) =>
+  `<!DOCTYPE html>
+  <html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <title>Document</title>
+  </head>
+  <body>
+    <div class="jumbotron jumbotron-fluid">
+    <div class="container">
+      <h1 class="display-4">Hi! My name is ${answers.name}</h1>
+      <p class="lead">I am from ${answers.location}.</p>
+      <h3>Example heading <span class="badge badge-secondary">Contact Me</span></h3>
+      <ul class="list-group">
+        <li class="list-group-item">My GitHub username is ${answers.github}</li>
+        <li class="list-group-item">LinkedIn: ${answers.linkedin}</li>
+      </ul>
+    </div>
+  </div>
+  </body>
+  </html>`;
+
+promptUser()
+  .then((answers) => writeFileAsync("index2.html", generateHTML(answers)))
+  .then(() => console.log("Successfully wrote to index.html"))
+  .catch((err) => console.error(err));
 
 // Write code to use inquirer to gather information about the development team members,
 // and to create objects for each team member (using the correct classes as blueprints!)
