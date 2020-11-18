@@ -4,105 +4,154 @@ const Intern = require("./lib/Intern");
 const inquirer = require("inquirer");
 const path = require("path");
 const fs = require("fs");
+const team = [];
 
 const OUTPUT_DIR = path.resolve(__dirname, "output");
 const outputPath = path.join(OUTPUT_DIR, "team.html");
 
 const render = require("./lib/htmlRenderer");
 
-const teamMember = () =>
-  inquirer.prompt([
-    {
-      type: "list",
-      name: "role",
-      message: "What kind of team member do you want to create?",
-      choices: ["manager", "engineer", "intern"],
-    },
-  ]);
+const createTeam = () => {
+  console.log("Start your team: ");
+  inquirer
+    .prompt([
+      {
+        type: "input",
+        name: "managerName",
+        message: "What is your name?",
+      },
+      {
+        type: "input",
+        name: "managerId",
+        message: "What is your ID?",
+      },
+      {
+        type: "input",
+        name: "managerEmail",
+        message: "What is your email address?",
+      },
+      {
+        type: "input",
+        name: "officeNumber",
+        message: "What is your office number?",
+      },
+    ])
+    .then((response) => {
+      const manager = new Manager(
+        response.managerName,
+        response.managerId,
+        response.managerEmail,
+        response.officeNumber
+      );
+      team.push(manager);
+      teamMembers();
+    });
 
-const managerQuestions = () =>
-  inquirer.prompt([
-    {
-      type: "input",
-      name: "name",
-      message: "What is your name?",
-    },
-    {
-      type: "input",
-      name: "email",
-      message: "What is your email address?",
-    },
-    {
-      type: "input",
-      name: "officenumber",
-      message: "What is your office number?",
-    },
-  ]);
-const internQuestions = () =>
-  inquirer.prompt([
-    {
-      type: "input",
-      name: "name",
-      message: "What is your name?",
-    },
-    {
-      type: "input",
-      name: "email",
-      message: "What is your email address?",
-    },
-    {
-      type: "input",
-      name: "school",
-      message: "What school do you attend?",
-    },
-  ]);
-const engineerQuestions = () =>
-  inquirer.prompt([
-    {
-      type: "input",
-      name: "name",
-      message: "What is your name?",
-    },
-    {
-      type: "input",
-      name: "email",
-      message: "What is your email address?",
-    },
-    {
-      type: "input",
-      name: "github",
-      message: "What is your GitHub username?",
-    },
-  ]);
+  function teamMembers() {
+    inquirer
+      .prompt([
+        {
+          type: "list",
+          name: "addTeam",
+          message: "What kind of team member do you want to create?",
+          choices: ["engineer", "intern", "team completed"],
+        },
+      ])
+      .then((data) => {
+        if (data.addTeam === "engineer") {
+          engineerQuestions();
+        } else if (data.addTeam === "intern") {
+          internQuestions();
+        } else {
+          finalTeam();
+        }
+      });
+  }
 
-const generateHTML = (answers) =>
-  `<!DOCTYPE html>
-  <html lang="en">
-  <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-    <title>Document</title>
-  </head>
-  <body>
-    <div class="jumbotron jumbotron-fluid">
-    <div class="container">
-      <h1 class="display-4">Hi! My name is ${answers.name}</h1>
-      <p class="lead">I am from ${answers.location}.</p>
-      <h3>Example heading <span class="badge badge-secondary">Contact Me</span></h3>
-      <ul class="list-group">
-        <li class="list-group-item">My GitHub username is ${answers.github}</li>
-        <li class="list-group-item">LinkedIn: ${answers.linkedin}</li>
-      </ul>
-    </div>
-  </div>
-  </body>
-  </html>`;
+  const internQuestions = () => {
+    inquirer
+      .prompt([
+        {
+          type: "input",
+          name: "internName",
+          message: "What is your name?",
+        },
+        {
+          type: "input",
+          name: "internId",
+          message: "What is your ID?",
+        },
+        {
+          type: "input",
+          name: "internEmail",
+          message: "What is your email address?",
+        },
+        {
+          type: "input",
+          name: "internSchool",
+          message: "What school do you attend?",
+        },
+      ])
+      .then((response) => {
+        const intern = new Intern(
+          response.internName,
+          response.internId,
+          response.internEmail,
+          response.internSchool
+        );
+        team.push(intern);
+        teamMembers();
+      });
+  };
+  const engineerQuestions = () => {
+    inquirer
+      .prompt([
+        {
+          type: "input",
+          name: "engineerName",
+          message: "What is your name?",
+        },
+        {
+          type: "input",
+          name: "engineerId",
+          message: "What is your ID?",
+        },
+        {
+          type: "input",
+          name: "engineerEmail",
+          message: "What is your email address?",
+        },
+        {
+          type: "input",
+          name: "engineerGithub",
+          message: "What is your GitHub username?",
+        },
+      ])
+      .then((response) => {
+        const engineer = new Engineer(
+          response.engineerName,
+          response.engineerId,
+          response.engineerEmail,
+          response.engineerGithub
+        );
+        team.push(engineer);
+        teamMembers();
+      });
+  };
+};
 
-promptUser()
-  .then((answers) => writeFileAsync("index2.html", generateHTML(answers)))
-  .then(() => console.log("Successfully wrote to index.html"))
-  .catch((err) => console.error(err));
+function finalTeam() {
+  console.log("Team is now created!");
+  const generateTeam = team.join(``);
+  fs.writeFile(outputPath, render(team), "utf-8", (err) => {
+    if (err) throw err;
+  });
+}
+
+createTeam();
+//   .then((answers) => writeFileAsync("index2.html", generateHTML(answers)))
+//   .then(() => console.log("Successfully wrote to index.html"))
+//   .catch((err) => console.error(err));
 
 // Write code to use inquirer to gather information about the development team members,
 // and to create objects for each team member (using the correct classes as blueprints!)
