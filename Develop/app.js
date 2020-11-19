@@ -12,7 +12,7 @@ const outputPath = path.join(OUTPUT_DIR, "team.html");
 const render = require("./lib/htmlRenderer");
 
 const createTeam = () => {
-  console.log("Start your team with your manager information: ");
+  console.log("Start your team with your personal manager information: ");
   inquirer
     .prompt([
       {
@@ -23,7 +23,7 @@ const createTeam = () => {
       {
         type: "input",
         name: "managerId",
-        message: "What is your ID?",
+        message: "What is your Manager ID?",
       },
       {
         type: "input",
