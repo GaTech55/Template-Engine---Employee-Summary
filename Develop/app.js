@@ -12,7 +12,7 @@ const outputPath = path.join(OUTPUT_DIR, "team.html");
 const render = require("./lib/htmlRenderer");
 
 const createTeam = () => {
-  console.log("Start your team: ");
+  console.log("Start your team with your manager information: ");
   inquirer
     .prompt([
       {
