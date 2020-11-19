@@ -24,9 +24,9 @@ The purpose of this project was to allow a manager the ability to generate a web
 
 ## Screenshots
 
-![DavidBrownReadMeGenerator](./Develop/assets/DavidBrownReadMeGenerator.gif)
+![DavidBrownEmployeeSummary](./Develop/assets/DavidBrownEmployeeSummary.gif)
 
-![ReadMeGeneratorImage](./Develop/assets/ReadMeGeneratorImage.png)
+![EmployeeSummaryImage](./Develop/assets/EmployeeSummaryHTML.png)
 
 ## Acceptance-Criteria
 
