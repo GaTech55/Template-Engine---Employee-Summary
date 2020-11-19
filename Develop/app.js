@@ -110,22 +110,22 @@ const createTeam = () => {
         {
           type: "input",
           name: "engineerName",
-          message: "What is your name?",
+          message: "What is your engineer's name?",
         },
         {
           type: "input",
           name: "engineerId",
-          message: "What is your ID?",
+          message: "What is your engineer's ID?",
         },
         {
           type: "input",
           name: "engineerEmail",
-          message: "What is your email address?",
+          message: "What is your engineer's email address?",
         },
         {
           type: "input",
           name: "engineerGithub",
-          message: "What is your GitHub username?",
+          message: "What is your engineer's GitHub username?",
         },
       ])
       .then((response) => {
