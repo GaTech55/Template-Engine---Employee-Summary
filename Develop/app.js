@@ -53,7 +53,8 @@ const createTeam = () => {
         {
           type: "list",
           name: "addTeam",
-          message: "What kind of team member do you want to create?",
+          message:
+            "What kind of team member do you want to create? If done select 'team completed'",
           choices: ["engineer", "intern", "team completed"],
         },
       ])
