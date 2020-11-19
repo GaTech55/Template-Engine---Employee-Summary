@@ -75,22 +75,22 @@ const createTeam = () => {
         {
           type: "input",
           name: "internName",
-          message: "What is your name?",
+          message: "What is your intern's name?",
         },
         {
           type: "input",
           name: "internId",
-          message: "What is your ID?",
+          message: "What is your intern's ID?",
         },
         {
           type: "input",
           name: "internEmail",
-          message: "What is your email address?",
+          message: "What is your intern's email address?",
         },
         {
           type: "input",
           name: "internSchool",
-          message: "What school do you attend?",
+          message: "What school does your intern attend?",
         },
       ])
       .then((response) => {
