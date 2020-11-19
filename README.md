@@ -49,7 +49,7 @@ To access this project you will need to visit my GitHub page and the "Template-E
 
 | **Commits** | **Contributor** |
 
-| 10 | [GaTech55](https://github.com/GaTech55)|
+| 15 | [GaTech55](https://github.com/GaTech55)|
 
 ## Copyright
 
